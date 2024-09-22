@@ -17,6 +17,8 @@ public class PlayerControllerX : MonoBehaviour
     public AudioClip moneySound;
     public AudioClip explodeSound;
 
+    public AudioClip bounceSound;
+
     //
     public bool isLowEnough;
 
@@ -46,7 +48,7 @@ public class PlayerControllerX : MonoBehaviour
         }
 
         //adding an if statememnt to limit how high the player can go
-        if (transform.position.y > 1){
+        if (transform.position.y > 14){
             isLowEnough = false;
         }
         else{
@@ -73,6 +75,14 @@ public class PlayerControllerX : MonoBehaviour
             fireworksParticle.Play();
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
+
+        }
+
+        //if the player collides with the ground
+        else if(other.gameObject.CompareTag("Ground")&& !gameOver)
+        {
+            playerRb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            playerAudio.PlayOneShot(bounceSound, 1.5f);
 
         }
 
